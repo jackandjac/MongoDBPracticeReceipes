@@ -51,5 +51,47 @@ db.students.deleteOne({name:"John"})
 db.students.deleteMany({name: "John" })
 db.students.deleteMany({})
 
-//work with mongoimport
+// $push operator
+db.students.insertOne({
+    _id:1, scores: [44,78, 38, 80]
+})
+//append one value to an array
+db.students.updateOne(
+    {_id:1},
+    {$push:{scores:80} }
+)
+// append multiple values to an array
+db.students.updateOne(
+    {name:"joe"},
+    {$push:{scores: {$each: [90, 92, 85]}  } }
+)
+// user $push operator with Multiple Modifiers
 
+db.students.updateOne(
+    {_id: 5},
+    {
+        $push:{
+            quizzes:{
+                $each: [{wk:5, score:8}, {wk:6, score:7}, {wk:7, score:6}],
+                $sort: {score:-1},
+                $slice: 3
+            }
+        }
+    }
+)
+
+db.pigments.insertOne({_id:1, colors:["blue", "green", "red"]})
+db.pigments.updateOne(
+    {_id:1},
+    {$addToSet: {colors: "mauve" }}
+)
+
+
+db.alphabet.insertOne(
+    {_id: 1, letters: ["a","b"]}
+)
+
+db.alphabet.updateOne(
+    {_id: 1},
+    {$addToSet: {letters: {$each: ["b","c", "d"]} }}
+)
