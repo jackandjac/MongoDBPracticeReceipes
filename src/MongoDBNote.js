@@ -505,7 +505,14 @@ db.students2.insertMany( [
 db.student2.updateMany(
   {},
   {$set:{"grade.$[elem].mean": 100}  },
-  {arrayFilters:[{"$elem.grade":{$gte: 85}}]}
+  {arrayFilters:[{"elem.grade":{$gte: 85}}]}
+)
+
+var item = xxx;
+db.users.updateOne(
+  {username: state["current_user"]},
+  {$push: {"groups.$[elem].items":item}},
+  {arrayFilters:[{"elem.groupname":"stuff"}]}
 )
 
 db.members.insertMany( [
